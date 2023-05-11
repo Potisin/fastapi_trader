@@ -29,23 +29,24 @@ class DegreeType(Enum):
 class Trade(BaseModel):
     id: int
     user_id: int
-    currency: str
+    currency: str = Field(max_length=6)
     side: str
-    price: float = Field(gt=0)
+    price: float = Field(ge=0)
     amount: float
 
 
 class Degree(BaseModel):
     id: int
     created_at: datetime
-    type_degree: str
+    type_degree: DegreeType # только указанные типы класса DegreeType
 
 
 class User(BaseModel):
     id: int
     username: str
     name: str
-    degree: Optional[List[Degree]]
+    degree: Optional[List[Degree]] = []  # необязательное поле, возвращает список (типа как кверисет) модели Degree.
+    # Если кверисет пустой, то возвращает список
 
 
 @app.get('/users/{user_id}/', response_model=List[User])
@@ -62,6 +63,6 @@ def second(user_id: int = 0):
 
 @app.post('/trades')
 def add_trades(trades: List[Trade]):
-    fake_trades.extend(trades)  # Пичарм ругается на несоответствие типов trades
+    # fake_trades.extend(trades)  # Пичарм ругается на несоответствие типов trades
     fake_trades.extend([dict(trade) for trade in trades])  # рекомендация CG
     return {'status': 200, 'data': fake_trades}
