@@ -5,6 +5,7 @@ from auth.base_config import auth_backend
 from auth.manager import get_user_manager
 from auth.models import User
 from auth.schemas import UserRead, UserCreate
+from operations.router import router as router_operation
 
 
 app = FastAPI(title='Trader App')
@@ -27,6 +28,8 @@ app.include_router(
 )
 
 current_user = fastapi_users.current_user()
+
+app.include_router(router_operation)
 
 
 @app.get("/protected-route")
