@@ -1,11 +1,13 @@
 from fastapi import FastAPI, Depends
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
 from fastapi_users import FastAPIUsers
-
-from auth.base_config import auth_backend
-from auth.manager import get_user_manager
-from auth.models import User
-from auth.schemas import UserRead, UserCreate
-from operations.router import router as router_operation
+from redis import asyncio as aioredis
+from src.auth.base_config import auth_backend
+from src.auth.manager import get_user_manager
+from src.auth.models import User
+from src.auth.schemas import UserRead, UserCreate
+from src.operations.router import router as router_operation
 
 
 app = FastAPI(title='Trader App')
@@ -40,3 +42,9 @@ def protected_route(user: User = Depends(current_user)):
 @app.get("/unprotected-route")
 def unprotected_route():
     return f"Hello, anonymous user"
+
+
+@app.on_event("startup")
+async def startup():
+    redis = aioredis.from_url("redis://localhost:6379", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")

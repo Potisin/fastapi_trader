@@ -5,9 +5,9 @@ from fastapi import Request
 from fastapi_users import BaseUserManager, IntegerIDMixin
 from fastapi_users import exceptions, models, schemas
 
-from auth.models import User
-from auth.utils import get_user_db
-from config import JWT_SECRET
+from src.auth.models import User
+from src.auth.utils import get_user_db
+from src.config import JWT_SECRET
 
 SECRET = JWT_SECRET
 
