@@ -1,13 +1,18 @@
-from sqlalchemy import String, Integer, Table, Column, TIMESTAMP
+from datetime import datetime
 
-from database import metadata
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-operation = Table('operation',
-                  metadata,
-                  Column('id', Integer, primary_key=True),
-                  Column('quantity', String),
-                  Column('figi', String),
-                  Column('instrument_type', String, nullable=True),
-                  Column('date', TIMESTAMP),
-                  Column('type', String),
-                  )
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Operation(Base):
+    __tablename__ = "operation"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    quantity: Mapped[str]
+    figi: Mapped[str]
+    instrument_type: Mapped[str]
+    date: Mapped[datetime]
+    type: Mapped[str]
