@@ -1,14 +1,13 @@
 import time
-from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_cache.decorator import cache
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database import get_async_session
-from src.operations.models import operation
-from src.operations.schemas import Operation
+from database import get_async_session
+from operations.models import operation
+from operations.schemas import Operation
 
 router = APIRouter(
     prefix='/operations',
