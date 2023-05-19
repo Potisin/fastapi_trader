@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class Operation(BaseModel):
+class OperationSchema(BaseModel):
     id: int
     quantity: str
     figi: str

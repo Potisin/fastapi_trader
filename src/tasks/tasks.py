@@ -3,13 +3,13 @@ from email.message import EmailMessage
 
 from celery import Celery
 
-from config import SMTP_USER, SMTP_PASSWORD
+from config import SMTP_USER, SMTP_PASSWORD, REDIS_HOST
 
 SMTP_HOST = 'smtp.gmail.com'
 SMTP_PORT = 465
 
 
-celery = Celery('tasks', broker='redis://172.17.0.3:6379')
+celery = Celery('tasks', broker=REDIS_HOST)
 
 
 def get_email_template_dashboard(username: str) -> str:

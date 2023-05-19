@@ -8,6 +8,7 @@ from auth.base_config import auth_backend
 from auth.manager import get_user_manager
 from auth.models import User
 from auth.schemas import UserRead, UserCreate
+from config import REDIS_HOST
 from operations.router import router as router_operation
 from tasks.routers import router as router_tasks
 
@@ -49,5 +50,5 @@ def unprotected_route():
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.from_url("redis://172.17.0.3:6379")
+    redis = aioredis.from_url(REDIS_HOST)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
