@@ -16,11 +16,11 @@ router = APIRouter(
 
 
 @router.get("/")
-@cache(expire=30)
 async def get_specific_operations(operation_type: str, session: AsyncSession = Depends(get_async_session)):
     try:
         query = select(Operation).where(Operation.type == operation_type)
         result = await session.execute(query)
+        r = result.all()
         time.sleep(3)
         return {
             'status': 'success',

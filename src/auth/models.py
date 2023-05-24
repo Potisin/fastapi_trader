@@ -16,6 +16,9 @@ class Role(Base):
     name: Mapped[str]
     permissions: Mapped[dict] = mapped_column(JSON)
 
+    def __repr__(self):
+        return f"Role(id={self.id}, name={self.name}, permissions={self.permissions})"
+
 
 # user = Table(
 #     "user",

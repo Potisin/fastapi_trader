@@ -10,8 +10,10 @@ async def test_add_role():
         await session.execute(stmt)
         await session.commit()
         query = select(Role)
-        result = await session.execute(query)
-        print(result.all())
+        result = await session.scalar(query)
+        print(result)
+        print(result.id)
+
 
 def test_registration():
     assert 1 == 1
