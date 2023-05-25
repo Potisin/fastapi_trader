@@ -20,7 +20,7 @@ async def get_specific_operations(type: str, session: AsyncSession = Depends(get
     query = select(Operation).where(Operation.type == type)
     result = await session.scalars(query)
     # time.sleep(3)
-    data= result.all()
+    data = result.all()
     return {
         'status': 'success',
         'data': data,
