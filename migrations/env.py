@@ -7,8 +7,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from src.auth.models import Base as Auth_base
-from src.operations.models import Base as Operations_base
 from src.config import DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT
+from src.operations.models import Base as Operations_base
 
 sys.path.append(os.path.join(sys.path[0], 'src'))  # после изменения структуры проекта.
 # Для того чтобы корректно работали импорты. Иначе ошибка при миграциях

@@ -9,12 +9,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 
 from database import get_async_session
-
-
+from src.auth.models import Base as Auth_base
 from src.config import (DB_HOST, DB_NAME_TEST, DB_PASS, DB_USER, DB_PORT)
 from src.main import app
-
-from src.auth.models import Base as Auth_base
 from src.operations.models import Base as Operations_base
 
 # DATABASE

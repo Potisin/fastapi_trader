@@ -1,7 +1,5 @@
-import time
-
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi_cache.decorator import cache
+from fastapi import APIRouter, Depends
+# from fastapi_cache.decorator import cache
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -15,25 +13,19 @@ router = APIRouter(
 )
 
 
+# @cache(expire=30)
 @router.get("/")
-async def get_specific_operations(operation_type: str, session: AsyncSession = Depends(get_async_session)):
-    try:
-        query = select(Operation).where(Operation.type == operation_type)
-        result = await session.execute(query)
-        r = result.all()
-        time.sleep(3)
-        return {
-            'status': 'success',
-            'data': [dict(r._mapping) for r in result],
-            'details': None
-        }
+async def get_specific_operations(type: str, session: AsyncSession = Depends(get_async_session)):
 
-    except Exception:
-        raise HTTPException(status_code=500, detail={
-            'status': 'error',
-            'data': None,
-            'details': None
-        })
+    query = select(Operation).where(Operation.type == type)
+    result = await session.scalars(query)
+    # time.sleep(3)
+    data= result.all()
+    return {
+        'status': 'success',
+        'data': data,
+        'details': None
+    }
 
 
 @router.post('/')
