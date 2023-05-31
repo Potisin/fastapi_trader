@@ -10,10 +10,11 @@ from auth.base_config import auth_backend
 from auth.manager import get_user_manager
 from auth.models import User
 from auth.schemas import UserRead, UserCreate
+from chat.router import router as router_chat
 from config import REDIS_HOST
 from operations.router import router as router_operation
-from tasks.routers import router as router_tasks
 from pages.router import router as router_pages
+from tasks.routers import router as router_tasks
 
 app = FastAPI(title='Trader App')
 
@@ -42,6 +43,7 @@ current_user = fastapi_users.current_user()
 app.include_router(router_operation)
 app.include_router(router_tasks)
 app.include_router(router_pages)
+app.include_router(router_chat)
 
 origins = [
     "http://localhost.tiangolo.com",

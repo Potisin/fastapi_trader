@@ -19,3 +19,7 @@ def get_base_page(request: Request):
 @router.get("/search/{type}")
 def get_search_page(request: Request, operations=Depends(get_specific_operations)):
     return templates.TemplateResponse("search.html", {"request": request, "operations": operations["data"]})
+
+@router.get("/chat")
+def get_search_page(request: Request):
+    return templates.TemplateResponse("chat.html", {"request": request})
