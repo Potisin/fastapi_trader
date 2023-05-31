@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:13.3
+    container_name: pg_trading
+    env_file: .env.docker
+
+  redis:
+    image: redis:latest
+    container_name: redis_trading
+
+  app:
+    build:
+      context: .
+    env_file: .env.docker
+    container_name: fastapi_trading
+    command: ['/fastapi_trader/docker/app.sh']
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+  celery:
+    build:
+      context: .
+    container_name: celery_trading
+    command: ['/fastapi_trader/docker/celery.sh', 'celery']
+    env_file: .env.docker
+    depends_on:
+      - redis
+
+  flower:
+    build:
+      context: .
+    container_name: flower_trading
+    command: [ '/fastapi_trader/docker/celery.sh', 'flower' ]
+    env_file: .env.docker
+    depends_on:
+      - redis
+      - celery
+    ports:
+      - '5555:5555'

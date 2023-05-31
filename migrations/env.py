@@ -5,13 +5,13 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from src.auth.models import *
-from src.operations.models import *
-from src.chat.models import *
-from src.database import Base
-from src.config import DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT
+from auth.models import *
+from operations.models import *
+from chat.models import *
+from database import Base
+from config import DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT
 
-sys.path.append(os.path.join(sys.path[0], 'src'))  # после изменения структуры проекта.
+# sys.path.append(os.path.join(sys.path[0], 'src'))  # после изменения структуры проекта.
 # Для того чтобы корректно работали импорты. Иначе ошибка при миграциях
 
 # this is the Alembic Config object, which provides

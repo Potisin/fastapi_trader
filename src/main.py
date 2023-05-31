@@ -11,7 +11,7 @@ from auth.manager import get_user_manager
 from auth.models import User
 from auth.schemas import UserRead, UserCreate
 from chat.router import router as router_chat
-from config import REDIS_HOST
+from config import REDIS_HOST, REDIS_PORT
 from operations.router import router as router_operation
 from pages.router import router as router_pages
 from tasks.routers import router as router_tasks
@@ -19,7 +19,7 @@ from tasks.routers import router as router_tasks
 app = FastAPI(title='Trader App')
 
 
-app.mount("/static", StaticFiles(directory="src/static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 fastapi_users = FastAPIUsers[User, int](
     get_user_manager,
@@ -72,5 +72,5 @@ def unprotected_route():
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.from_url(REDIS_HOST)
+    redis = aioredis.from_url(f'redis://{REDIS_HOST}:{REDIS_PORT}')
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
